@@ -1,6 +1,10 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
+This fork of the visualboyadvance-m GBA emulator is intended to host the code of my Pokemon Red AI. I decided to setup this repository as a fork of vba-m because the AI needs to tap into the emulators code in order to read system memory and ROM. I have no intention of pushing any of this code upstream. The vast majority of code for my project resides in src/poke_ai. To differentiate my code with the actual emulator code, I've made a different repository and submodule for my code. To build this project, you should be able to follow the build instructions below.
+
+To learn more about my PokeAI project, refer to this repository: (TODO: link)
+
 
 - [Visual Boy Advance - M](#visual-boy-advance---m)
   - [Building](#building)
