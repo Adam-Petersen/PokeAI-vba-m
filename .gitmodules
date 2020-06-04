@@ -2,3 +2,6 @@
 	path = dependencies
 	url = https://github.com/visualboyadvance-m/dependencies.git
 	branch = master
+[submodule "src/poke_ai"]
+	path = src/poke_ai
+	url = https://github.com/Adam-Petersen/PokeAI
