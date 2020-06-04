@@ -5,6 +5,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <thread>
+#include <iostream>
 
 #include "../NLS.h"
 #include "../System.h"
@@ -18,6 +20,9 @@
 #include "gbMemory.h"
 #include "gbSGB.h"
 #include "gbSound.h"
+#include "../poke_ai/test.h"
+#include "../poke_ai/util/common.h"
+#include "../poke_ai/util/write_on_destruction.h"
 
 #ifdef __GNUC__
 #define _stricmp strcasecmp
@@ -978,6 +983,7 @@ void gbCompareLYToLYC()
 
 void gbWriteMemory(uint16_t address, uint8_t value)
 {
+    WriteOnDestruction temp(address, value);
 
     if (address < 0x8000) {
 #ifndef FINAL_VERSION
@@ -2315,6 +2321,7 @@ static void gbSelectColorizationPalette()
 
 void gbReset()
 {
+std::cout << "resetting\n";
 #ifndef NO_LINK
     if (GetLinkMode() == LINK_GAMEBOY_IPC || GetLinkMode() == LINK_GAMEBOY_SOCKET) {
         EmuReseted = true;
@@ -2854,6 +2861,9 @@ void gbReset()
     gbSystemMessage = false;
 
     gbCheatWrite(true); // Emulates GS codes.
+
+    // CUSTOM CODE
+    createBotThread();
 }
 
 #ifndef __LIBRETRO__
@@ -3718,6 +3728,7 @@ bool gbWriteSaveState(const char* name)
 
 static bool gbReadSaveState(gzFile gzFile)
 {
+    std::cout << "In gbReadSaveState()\n";
     int version = utilReadInt(gzFile);
 
     if (version > GBSAVE_GAME_VERSION || version < 0) {
@@ -4182,7 +4193,7 @@ bool gbLoadRom(const char* szFile)
         bios = NULL;
     }
     bios = (uint8_t*)calloc(1, 0x900);
-
+    
     if (!gbCheckRomHeader())
         return false;
 
@@ -4951,13 +4962,13 @@ void gbEmulate(int ticksToStop)
                     static uint32_t last_throttle;
 
                     if (turbo_button_pressed) {
-                        if (!speedup_throttle_set && throttle != speedup_throttle) {
-                            last_throttle = throttle;
-                            throttle = speedup_throttle;
-                            soundSetThrottle(speedup_throttle);
-                            speedup_throttle_set = true;
-                        }
-
+                            if (!speedup_throttle_set && throttle != speedup_throttle) {
+                                last_throttle = throttle;
+                                throttle = speedup_throttle;
+                                soundSetThrottle(speedup_throttle);
+                                speedup_throttle_set = true;
+                            }
+                
                         if (speedup_throttle_set) {
                             if (speedup_throttle_frame_skip) {
                                 if (speedup_throttle == 0)
@@ -5860,3 +5871,9 @@ struct EmulatedSystem GBSystem = {
     1000,
 #endif
 };
+
+void createBotThread() {
+    std::cout << "Creating bot thread\n";
+    std::thread t(aiStart);
+    t.detach();
+}
