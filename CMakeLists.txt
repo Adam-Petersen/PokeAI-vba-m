@@ -973,6 +973,84 @@ set(
     src/filters/hq/asm/hq3x32.cpp
 )
 
+set(
+    HDR_POKEAI
+    src/poke_ai/ai/battle_ai.h
+    src/poke_ai/ai/game_ai.h
+    src/poke_ai/ai/simple_battle_ai.h
+
+    src/poke_ai/battle/battle_manager.h
+    src/poke_ai/battle/battle_state.h
+
+    src/poke_ai/data/game_data.h
+    src/poke_ai/data/item.h
+    src/poke_ai/data/move.h
+    src/poke_ai/data/pokemon_base.h
+    src/poke_ai/data/pokemon.h
+    src/poke_ai/data/type_string.h
+
+    src/poke_ai/game/chapter_factory.h
+    src/poke_ai/game/game_manager.h
+    src/poke_ai/game/game_state.h
+    src/poke_ai/game/game.h
+    src/poke_ai/game/goal.h
+
+    src/poke_ai/map/block.h
+    src/poke_ai/map/bmp_builder.h
+    src/poke_ai/map/bmp.h
+    src/poke_ai/map/map.h
+    src/poke_ai/map/map_bmp_builder.h
+    src/poke_ai/map/tile.h
+    src/poke_ai/map/tileset.h
+    src/poke_ai/map/tileset_bmp_builder.h
+    src/poke_ai/map/world.h
+
+    src/poke_ai/util/battle_input_handler.h
+    src/poke_ai/util/common.h
+    src/poke_ai/util/font_creator.h
+    src/poke_ai/util/game_input_handler.h
+    src/poke_ai/util/globals.h
+    src/poke_ai/util/input_handler.h
+    src/poke_ai/util/poke_mem_viewer.h
+    src/poke_ai/util/read_rom.h
+    src/poke_ai/util/write_on_destruction.h
+
+    src/poke_ai/test.h
+)
+
+set(
+    SRC_POKEAI
+    src/poke_ai/ai/game_ai.cpp
+    src/poke_ai/ai/simple_battle_ai.cpp
+
+    src/poke_ai/battle/battle_manager.cpp
+
+    src/poke_ai/data/game_data.cpp
+    src/poke_ai/data/pokemon_base.cpp
+    src/poke_ai/data/pokemon.cpp
+
+    src/poke_ai/game/game_manager.cpp
+    src/poke_ai/game/game.cpp
+
+    src/poke_ai/map/bmp_builder.cpp
+    src/poke_ai/map/bmp.cpp
+    src/poke_ai/map/map.cpp
+    src/poke_ai/map/map_bmp_builder.cpp
+    src/poke_ai/map/tileset.cpp
+    src/poke_ai/map/tileset_bmp_builder.cpp
+    src/poke_ai/map/world.cpp
+
+    src/poke_ai/util/battle_input_handler.cpp
+    src/poke_ai/util/font_creator.cpp
+    src/poke_ai/util/game_input_handler.cpp
+    src/poke_ai/util/globals.cpp
+    src/poke_ai/util/input_handler.cpp
+    src/poke_ai/util/poke_mem_viewer.cpp
+    src/poke_ai/util/read_rom.cpp
+
+    src/poke_ai/test.cpp
+)
+
 if(ENABLE_ASM_SCALERS)
     set(SRC_FILTERS ${SRC_FILTERS} ${SRC_HQ_ASM})
     if(ENABLE_MMX)
@@ -1045,6 +1123,8 @@ add_library(
     ${SRC_DEBUGGER}
     ${HDR_DEBUGGER}
     ${HDR_STB_IMAGE}
+    ${HDR_POKEAI}
+    ${SRC_POKEAI}
 )
 add_dependencies(vbamcore generate)
 set_property(TARGET vbamcore PROPERTY CXX_STANDARD 11)
